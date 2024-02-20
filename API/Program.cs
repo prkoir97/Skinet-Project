@@ -15,7 +15,8 @@ builder.Services.AddDbContext<StoreContext>(opt =>
     opt. UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddScoped<IProductRepository, ProductRepository>(); // AddScoped means that a new instance of ProductRepository will be created for each scope of the application's request pipeline. Erases after.
-
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // End Container
 
 var app = builder.Build();
@@ -28,6 +29,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();               // Swagger documents our API endpoints
     app.UseSwaggerUI();
 }
+
+app.UseStaticFiles();
 
 app.UseAuthorization();
 
