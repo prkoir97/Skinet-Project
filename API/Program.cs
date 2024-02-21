@@ -1,34 +1,28 @@
-using Core.Interfaces;
+using API.Extensions;
+using API.Middleware;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args); // Configures kestrel web server, resposible for running our web app
 
-// Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<StoreContext>(opt => 
-{
-    opt. UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-builder.Services.AddScoped<IProductRepository, ProductRepository>(); // AddScoped means that a new instance of ProductRepository will be created for each scope of the application's request pipeline. Erases after.
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-// End Container
+builder.Services.AddApplicationServices(builder.Configuration);
+
 
 var app = builder.Build();
 
 // Middleware: software that we can use to do something with that request on it's journey in, and out
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()) 
-{
-    app.UseSwagger();               // Swagger documents our API endpoints
-    app.UseSwaggerUI();
-}
+app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseStatusCodePagesWithReExecute("/errors/{0}");
+
+
+app.UseSwagger();               // Swagger documents our API endpoints
+app.UseSwaggerUI();
+
 
 app.UseStaticFiles();
 

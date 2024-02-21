@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers;
 
 [ApiController] //contains the endpoints that are HTTPS requests, returns HTTP response
+[ApiExplorerSettings(IgnoreApi = true)] // Block it from being viewed on Swagger UI
 [Route("[controller]")] // GET https://localhost:5001/WeatherForecast //[square brackets] imply placeholder
 public class WeatherForecastController : ControllerBase
 {
