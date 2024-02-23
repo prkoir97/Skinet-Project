@@ -40,21 +40,21 @@ export class ShopComponent implements OnInit{
         this.shopParams.pageSize = response.pageSize;
         this.totalCount = response.count;
       },
-      error: error => console.log(error),
+      error: error => console.log(error)
     })
   }
     
   getBrands() {
     this.shopService.getBrands().subscribe({
       next: response => this.brands = [{id: 0, name: 'All'}, ...response],
-      error: error => console.log(error),
+      error: error => console.log(error)
     })
   }
       
   getTypes() {
     this.shopService.getTypes().subscribe({
       next: response => this.types = [{id: 0, name: 'All'}, ...response],
-      error: error => console.log(error),
+      error: error => console.log(error)
     })
   }
 
