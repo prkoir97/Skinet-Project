@@ -1,11 +1,6 @@
-using System;
 using System.Net;
 using System.Text.Json;
-using System.Threading.Tasks;
 using API.Errors;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace API.Middleware
 {
@@ -28,7 +23,6 @@ namespace API.Middleware
             {
                 await _next(context);
             }
-
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
@@ -36,7 +30,7 @@ namespace API.Middleware
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
                 var response = _env.IsDevelopment()
-                    ? new ApiException((int)HttpStatusCode.InternalServerError, ex.Message, ex.StackTrace.ToString()) 
+                    ? new ApiException((int)HttpStatusCode.InternalServerError, ex.Message, ex.StackTrace.ToString())
                     : new ApiException((int)HttpStatusCode.InternalServerError);
 
                 var options = new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
