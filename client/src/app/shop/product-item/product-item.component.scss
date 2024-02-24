@@ -1,11 +1,12 @@
-.btn{
+.btn {
     width: 30%;
     height: 40px;
 }
 
 .image :hover {
     opacity: 1;
-    &button{
+
+    & button {
         transform: none;
         opacity: 1;
     }
@@ -17,7 +18,7 @@
     height: 100%;
     top: 0;
     left: 0;
-    background: rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.5);
     opacity: 0;
     transition: all 0.5s;
 
@@ -30,7 +31,7 @@
         transform: translateX(-20px);
     }
 
-     & button:last-of-type {
+    & button:last-of-type {
         transform: translateX(20px);
     }
 }
