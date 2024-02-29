@@ -20,7 +20,7 @@ namespace Infrastructure.Identity
                         Street = "10 Bobby Street",
                         City = "New York Street",
                         State = "NY",
-                        ZipCode = "90210"
+                        Zipcode = "90210"
                     }
                 };
 
