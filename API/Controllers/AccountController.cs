@@ -7,6 +7,7 @@ using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -35,9 +36,9 @@ namespace API.Controllers
 
             return new UserDto
             {
-                DisplayName = user.DisplayName,
+                Email = user.Email,
                 Token = _tokenService.CreateToken(user),
-                Email = user.Email
+                DisplayName = user.DisplayName,
             };
         }
 

@@ -42,6 +42,7 @@ namespace Infrastructure.Data
         {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
         }
+        
         public void Add(T entity)
         {
             _context.Set<T>().Add(entity);

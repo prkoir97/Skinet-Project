@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Basket, BasketItem, BasketTotals } from '../shared/models/basket';
 import { HttpClient } from '@angular/common/http';
@@ -48,6 +48,7 @@ export class BasketService {
 
   addItemToBasket(item: Product | BasketItem, quantity = 1) {
     if ((this.isProduct(item))) item = this.mapProductItemToBasketItem(item);
+    console.log(item);
     const basket = this.getCurrentBasketValue() ?? this.createBasket();
     basket.items = this.addOrUpdateItem(basket.items, item, quantity);
     this.setBasket(basket);
@@ -56,7 +57,7 @@ export class BasketService {
   removeItemFromBasket(id: number, quantity = 1) {
     const basket = this.getCurrentBasketValue();
     if (!basket) return;
-    const item = basket.items.find(x => x.id == id);
+    const item = basket.items.find(x => x.id === id);
     if (item) {
       item.quantity -= quantity;
       if (item.quantity === 0) {
@@ -68,7 +69,7 @@ export class BasketService {
   }
 
   deleteBasket(basket: Basket) {
-    return this.http.delete(this.baseUrl + 'bassket?id=' + basket.id).subscribe({
+    return this.http.delete(this.baseUrl + 'basket?id=' + basket.id).subscribe({
       next: () => {
         this.deletelocalBasket();
       }
@@ -78,7 +79,7 @@ export class BasketService {
   deletelocalBasket() {
     this.basketSource.next(null);
     this.basketTotalSource.next(null);
-    localStorage.removeItem('basket.id');
+    localStorage.removeItem('basket_id');
   }
 
   private addOrUpdateItem(items: BasketItem[], itemToAdd: BasketItem, quantity: number): BasketItem[] {

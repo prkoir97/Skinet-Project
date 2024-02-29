@@ -3,6 +3,7 @@ using Core.Entities.OrderAggregate;
 using Core.Interfaces;
 using Core.Specifications;
 
+
 namespace Infrastructure.Services
 {
     public class OrderService : IOrderService
@@ -15,10 +16,9 @@ namespace Infrastructure.Services
             _basketRepo = basketRepo;
         }
 
-        public async Task<Order> CreateOrderAsync(string buyerEmail, int deliveryMethodId,
-        string basketId, Address shippingAddress)
+        public async Task<Order> CreateOrderAsync(string buyerEmail, int deliveryMethodId, string basketId, Address shippingAddress)
         {
-            // get basket from the basket repo
+            // get basket from repo
             var basket = await _basketRepo.GetBasketAsync(basketId);
 
             // get items from the product repo
@@ -35,7 +35,7 @@ namespace Infrastructure.Services
             var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(deliveryMethodId);
 
             // calc subtotal
-            var subtotal = items.Sum(items => items.Price * items.Quantity);
+            var subtotal = items.Sum(item => item.Price * item.Quantity);
 
             // create order
             var order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subtotal);
