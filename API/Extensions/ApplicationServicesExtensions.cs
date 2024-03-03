@@ -28,6 +28,8 @@ namespace API.Extensions
                 var options = ConfigurationOptions.Parse(config.GetConnectionString("Redis"));
                 return ConnectionMultiplexer.Connect(options);
             });
+
+            services.AddSingleton<IResponseCacheService, ResponseCacheService>();
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IProductRepository, ProductRepository>(); // AddScoped means that a new instance of ProductRepository will be created for each scope of the application's request pipeline. Erases after.
             services.AddScoped<IPaymentService, PaymentService>();

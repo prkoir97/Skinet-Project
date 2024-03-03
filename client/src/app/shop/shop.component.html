@@ -10,7 +10,6 @@
                 </option>
             </select>
 
-
             <h5 class="text-warning ms-3">Brands</h5>
             <ul class="list-group my-3">
                 <li class="list-group-item"
@@ -54,6 +53,7 @@
                 <app-pager
                     [totalCount]="totalCount"
                     [pageSize]="shopParams.pageSize"
+                    [pageNumber]="shopParams.pageNumber"
                     (pageChanged)="onPageChanged($event)"
                 ></app-pager>
             </div>
